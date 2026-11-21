@@ -74,6 +74,11 @@ Vitest starts the temporary database once for the complete test run. Before each
 
 See `tests/trains.test.js` for example endpoint tests that use Supertest to send requests to the real `/api/trains` route.
 
+### API Documentation
+
+Start the app and open `/api/docs/` to view and test the documented API routes.
+The OpenAPI document is also available at `/api/openapi.json`.
+
 This project simulates realistic work situations requiring reverse engineering, refactoring, debugging, or feature extension.
 
 ### For Contributors

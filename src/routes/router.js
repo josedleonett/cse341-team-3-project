@@ -8,6 +8,8 @@ import { login, logout, register } from '../controllers/auth.js';
 import { getAllBookings, getMyBookings, bookingsAdminPage } from '../controllers/bookings.js';
 import { adminDashboardPage, userDashboardPage } from '../controllers/dashboard.js';
 import { requireApiLogin, requireApiRole, requirePageLogin, requirePageRole } from '../middleware/auth.js';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from '../swagger.js';
 
 const router = Router();
 
@@ -33,6 +35,10 @@ router.get('/trains', trainsPage);
 
 // Trains API
 router.get('/api/trains', trainsApi);
+
+// API documentation
+router.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+router.get('/api/openapi.json', (req, res) => res.status(200).json(swaggerSpec));
 
 // Trips API
 router.use('/api', apiRouter);

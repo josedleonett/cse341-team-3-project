@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { getDb } from '../db/connect.js';
 import { getSchedulesForTrip, getSchedulesForTripAndMonth } from '../controllers/schedules.js';
+import { getAllStations, getStationById } from '../controllers/stations.js';
 
 const router = Router();
 
@@ -140,5 +141,85 @@ router.get('/:id/schedules', (req, res) => {
 
     return getSchedulesForTrip(req, res);
 });
+
+/**
+ * @swagger
+ * /api/stations:
+ *   get:
+ *     summary: Get all stations
+ *     tags: [Stations]
+ *     responses:
+ *       200:
+ *         description: A list of stations
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Station'
+ *       500:
+ *         description: Failed to fetch stations
+ */
+router.get('/stations', getAllStations);
+
+/**
+ * @swagger
+ * /api/stations/{id}:
+ *   get:
+ *     summary: Get a station by ID
+ *     tags: [Stations]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The station's unique string ID
+ *         schema:
+ *           type: string
+ *         example: nagoya
+ *     responses:
+ *       200:
+ *         description: The requested station
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Station'
+ *       404:
+ *         description: Station not found
+ *       500:
+ *         description: Failed to fetch station
+ * components:
+ *   schemas:
+ *     Station:
+ *       type: object
+ *       required:
+ *         - id
+ *         - name
+ *         - prefecture
+ *         - region
+ *         - facilities
+ *         - description
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: nagoya
+ *         name:
+ *           type: string
+ *           example: Nagoya Station
+ *         prefecture:
+ *           type: string
+ *           example: Aichi
+ *         region:
+ *           type: string
+ *           example: central
+ *         facilities:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: [restaurant, shop, restroom]
+ *         description:
+ *           type: string
+ *           example: Major transportation hub in central Japan.
+ */
+router.get('/stations/:id', getStationById);
 
 export default router;
