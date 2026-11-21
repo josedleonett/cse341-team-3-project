@@ -133,7 +133,7 @@ router.get('/trips/:id', async (req, res, next) => {
  *       500:
  *         description: Failed to fetch schedules
  */
-router.get('/:id/schedules', (req, res) => {
+router.get('/trips/:id/schedules', (req, res) => {
     if (req.query.month !== undefined) {
         return getSchedulesForTripAndMonth(req, res);
     }
